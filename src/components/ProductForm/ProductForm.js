@@ -1,39 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 
 const ProductForm = props => {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        props.onFormSubmit(title, description, price);
-        setTitle('');
-        setDescription('');
-        setPrice('');
-    }
+    const renderInput = ({ input, label }) => {
+        return (
+            <div>
+                <label>{label}</label>
+                <input {...input} autoComplete='off'/>
+            </div>
+        )
+    };
+
+    const onSubmit = formValues => {
+        props.onSubmit(formValues);
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Title</label>
-                <input onChange={e => setTitle(e.target.value)} value={title} type='text' />
-            </div>
-            <div>
-                <label>Description</label>
-                <textarea onChange={e => setDescription(e.target.value)} value={description} />
-            </div>
-            <div>
-                <label>Price</label>
-                <input type='text' onChange={e => setPrice(e.target.value)} value={price} />
-            </div>
-            <div>
-                <label>Upload an image</label>
-                <input type='file' />
-            </div>
-            <button>Create Product</button>
+        <form onSubmit={props.handleSubmit(onSubmit)}>
+            <Field name="title" component={renderInput} label='Enter Title' />
+            <Field name="description" component={renderInput} label='Enter Description' />
+            <Field name="price" component={renderInput} label='Enter Price' />
+            <button>Submit</button>
         </form>
     );
-};
+}
 
-export default ProductForm;
+export default reduxForm({
+    form: 'productForm'
+})(ProductForm);

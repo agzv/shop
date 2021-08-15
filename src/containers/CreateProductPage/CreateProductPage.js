@@ -5,12 +5,11 @@ import { createProduct } from '../../redux/actions';
 import ProductForm from '../../components/ProductForm/ProductForm';
 
 const CreateProductPage = props => {
-    const onFormSubmit = (title, description, price) => {
-        console.log(title, description, price);
-        props.createProduct(title, description, price);
+    const onFormSubmit = product => {
+        props.createProduct(product);
     };
 
-    return <ProductForm onFormSubmit={onFormSubmit} />
+    return <ProductForm onSubmit={onFormSubmit} />
 };
 
 export default connect(null, { createProduct })(CreateProductPage);

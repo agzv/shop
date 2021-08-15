@@ -8,6 +8,7 @@ const NavigationItems = () => {
             <NavigationItem path='/' name='Main Page' />
             <NavigationItem path='/products' name='Products' />
             <NavigationItem path='/products/create-product' name='Create Product' />
+            <NavigationItem path='/auth/signup' name='Sign Up' />
         </div>
     );
 };
