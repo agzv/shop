@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchProduct, editProduct } from '../../redux/actions';
 import ProductForm from '../../components/ProductForm/ProductForm';
+import requireAuth from '../../hoc/requireAuth';
 
 const EditProductPage = props => {
     const productId = props.match.params.productId;
@@ -33,4 +34,6 @@ const mapStateToProps = state => {
     return { product: state.products.product };
 };
 
-export default connect(mapStateToProps, { fetchProduct, editProduct })(EditProductPage);
+const authEditProductPage = requireAuth(EditProductPage);
+
+export default connect(mapStateToProps, { fetchProduct, editProduct })(authEditProductPage);

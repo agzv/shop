@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { createProduct } from '../../redux/actions';
 import ProductForm from '../../components/ProductForm/ProductForm';
+import requireAuth from '../../hoc/requireAuth';
 
 const CreateProductPage = props => {
     const onFormSubmit = product => {
@@ -12,4 +13,6 @@ const CreateProductPage = props => {
     return <ProductForm onSubmit={onFormSubmit} />
 };
 
-export default connect(null, { createProduct })(CreateProductPage);
+const authCreateProdcutPage = requireAuth(CreateProductPage);
+
+export default connect(null, { createProduct })(authCreateProdcutPage);

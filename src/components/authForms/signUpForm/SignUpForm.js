@@ -32,5 +32,5 @@ const SignUpForm = props => {
 };
 
 export default reduxForm({
-    form: 'SignUpForm'
+    form: 'AdminSignUpForm'
 })(SignUpForm);

@@ -11,6 +11,17 @@ const ProductPage = props => {
         fetchProducts();
     }, [fetchProducts]);
 
+    const renderActionButtons = (productId) => {
+        if(props.isLoggedIn) {
+            return (
+                <div className='actionBtns'>
+                    <Link to={`/products/edit-product/${productId}`}>Edit</Link>
+                    <button onClick={() => deleteProduct(productId)}>Delete</button>
+                </div>
+            );
+        }
+    };
+
     const deleteProduct = productId => {
         props.deleteProduct(productId);
     };
@@ -24,10 +35,7 @@ const ProductPage = props => {
             return (
                 <li key={product._id}>
                     {product.title}
-                    <div className='actionBtns'>
-                        <Link to={`/products/edit-product/${product._id}`}>Edit</Link>
-                        <button onClick={() => deleteProduct(product._id)}>Delete</button>
-                    </div>
+                    {renderActionButtons(product._id)}
                 </li>
             );
         })
@@ -42,7 +50,10 @@ const ProductPage = props => {
 };
 
 const mapStateToProps = state => {
-    return { products: state.products.products };
+    return { 
+        products: state.products.products,
+        isLoggedIn: state.auth.adminUserId !== null
+    };
 };
 
 export default connect(mapStateToProps, { fetchProducts, deleteProduct })(ProductPage);
