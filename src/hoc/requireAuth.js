@@ -22,7 +22,7 @@ export default ChildComponent => {
     }
   }
   function mapStateToProps(state) {
-    return { auth: state.auth.adminUserId !== null };
+    return { auth: state.auth.isUserLoggedIn };
   }
   return connect(mapStateToProps)(ComposedComponent);
 };

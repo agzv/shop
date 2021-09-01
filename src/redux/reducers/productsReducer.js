@@ -1,10 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { CREATE_PRODUCT, FETCH_PRODUCTS, FETCH_PRODUCT } from '../actions/types';
+import { CREATE_PRODUCT, FETCH_PRODUCTS, FETCH_PRODUCT, EDIT_PRODUCT, DELETE_PRODUCT } from '../actions/types';
 
 const INITIAL_STATE = {
     products: [],
     product: {},
-    successMessage: ''
+    message: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,8 +14,11 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_PRODUCT:
             return { ...state, product: action.payload };
         case CREATE_PRODUCT: 
-            console.log(action.payload);
-            return { ...state, successMessage: action.payload };
+            return { ...state, message: action.payload };
+        case EDIT_PRODUCT:
+            return { ...state, message: action.payload };
+        case DELETE_PRODUCT:
+            return { ...state, message: action.payload };
         default:
             return state;
     }

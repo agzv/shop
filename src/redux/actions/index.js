@@ -2,12 +2,20 @@ import {
     FETCH_PRODUCTS, 
     FETCH_PRODUCT, 
     CREATE_PRODUCT, 
-    EDIT_PRODUCT, 
+    EDIT_PRODUCT,
+    DELETE_PRODUCT, 
     CREATE_ADMIN_USER, 
     LOGIN_USER_ADMIN, 
     LOGOUT_USER_ADMIN, 
     CREATE_ADMIN_USER_FAILED,
-    LOGIN_USER_ADMIN_FAILED
+    LOGIN_USER_ADMIN_FAILED,
+    CREATE_USER,
+    CREATE_USER_FAILED,
+    LOGIN_USER,
+    LOGIN_USER_FAILED,
+    LOGOUT_USER,
+    ADD_TO_CART,
+    GET_CART
 } from './types';
 import axiosInstance from '../../utilities/axiosInstance';
 import history from '../../utilities/history';
@@ -27,32 +35,52 @@ export const fetchProduct = productId => {
 };
 
 export const editProduct = (productId, updatedProduct) => {
-    return async (dispatch, getState) => {
-        const adminToken = getState().auth.adminToken;
+    return async dispatch => {
+        const adminToken = localStorage.getItem('token');
         const response = await axiosInstance.patch(`/products/${productId}`, updatedProduct, { headers: { Authorization: `Bearer ${adminToken}` } });
         dispatch({ type:  EDIT_PRODUCT, payload: response.data});
     };
 };
 
 export const deleteProduct = productId => {
-    return async (dispatch, getState) => {
-        const adminToken = getState().auth.adminToken;
+    return async dispatch => {
+        const adminToken = localStorage.getItem('token');
         const response = await axiosInstance.delete(`/products/${productId}`, { headers: { Authorization: `Bearer ${adminToken}` } });
-        console.log(response);
+        dispatch({ type: DELETE_PRODUCT, payload: response.data.message })
     };
 };
 
 export const createProduct = product => {
-    return async (dispatch, getState) => {
-        const adminToken = getState().auth.adminToken;
-        console.log(adminToken);
-        const response = await axiosInstance.post('/products/create-product', product, { headers: { Authorization: `Bearer ${adminToken}` } });
+    return async dispatch => {
+        const adminToken = localStorage.getItem('token');
+        const formData = new FormData();
+        formData.append('title', product.title);
+        formData.append('description', product.description);
+        formData.append('price', product.price);
+        formData.append('image', product.image);
+        const response = await axiosInstance.post('/products/create-product', formData, { headers: { Authorization: `Bearer ${adminToken}` } });
         dispatch({ type: CREATE_PRODUCT, payload: response.data.message });
         history.push('/products');
     };
 };
 
-// AUTH
+export const addToCart = productId => {
+    return async dispatch => {
+        const userToken = localStorage.getItem('token');
+        const response = await axiosInstance.post('/products/add-to-cart', { productId: productId }, { headers: { Authorization: `Bearer ${userToken}` } });
+        dispatch({ type: ADD_TO_CART, payload: response.data });
+    };
+};
+
+export const getCart = () => {
+    return async dispatch => {
+        const userToken = localStorage.getItem('token');
+        const response = await axiosInstance.get('/products/cart', { headers: { Authorization: `Bearer ${userToken}` } });
+        dispatch({ type: GET_CART, payload: response.data.cartProducts });
+    };
+};
+
+// AUTH ADMIN
 export const createAdminUser = userData => {
     return async dispatch => {
         try {
@@ -85,7 +113,7 @@ export const loginAdminUser = (userData = null) => {
             }
         }
         
-    }
+    };
 };
 
 export const logoutAdminUser = () => {
@@ -95,29 +123,69 @@ export const logoutAdminUser = () => {
     return { type: LOGOUT_USER_ADMIN };
 };
 
-export const authAutoLogin = () => {
+// AUTH USER
+export const createUser = userData => {
+    return async dispatch => {
+        try {
+            const response = await axiosInstance.post('/auth/user/create-user', userData);
+            dispatch({ type: CREATE_USER, payload: response.data });
+        } catch(error) {
+            if(error.response) {
+                dispatch({ type: CREATE_USER_FAILED, payload: error.response.data.error });
+            }
+        }
+    };
+};
+
+export const loginUser = userData => {
+    return async dispatch => {
+        try {
+            const response = await axiosInstance.post('/auth/user/login-user', userData);
+            localStorage.setItem('uid', response.data.userId);
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('expirationDate', new Date().getTime() + (60 * 60 * 1000));
+            console.log(response.data);
+            dispatch({ type: LOGIN_USER, payload: response.data });
+            history.push('/products');
+        } catch(error) {
+            if(error.response) {
+                dispatch({ type: LOGIN_USER_FAILED, payload: error.response.data.error });
+            };
+        };
+    };
+};
+
+export const logoutUser = () => {
+    localStorage.removeItem('uid');
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    return { type: LOGOUT_USER };
+};
+
+// CHECK AUTH
+export const authAutoLogin = actionType => {
     return dispatch => {
-        const adminToken = localStorage.getItem('token');
-        if(!adminToken) {
+        const token = localStorage.getItem('token');
+        if(!token) {
             dispatch(logoutAdminUser());
         } else {
             const expirationDate = localStorage.getItem('expirationDate');
             if(expirationDate <= new Date().getTime()){
                 dispatch(logoutAdminUser());
             } else {
-                const adminUserId = localStorage.getItem('uid');
-                dispatch({ type: LOGIN_USER_ADMIN, payload: { adminToken, adminUserId } });
+                const userId = localStorage.getItem('uid');
+                dispatch({ type: actionType, payload: { token, userId } });
                 dispatch(checkAuthTimeout());
             }
         }
-    }
-}
+    };
+};
 
 export const checkAuthTimeout = () => {
     return dispatch => {
         const expirationDate = localStorage.getItem('expirationDate');
         setTimeout(() => {
             dispatch(logoutAdminUser());
-        }, expirationDate);
-    }
+        }, expirationDate / 1000);
+    };
 };

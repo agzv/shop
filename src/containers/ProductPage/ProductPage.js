@@ -11,20 +11,20 @@ const ProductPage = props => {
         fetchProducts();
     }, [fetchProducts]);
 
-    const renderActionButtons = (productId) => {
-        if(props.isLoggedIn) {
-            return (
-                <div className='actionBtns'>
-                    <Link to={`/products/edit-product/${productId}`}>Edit</Link>
-                    <button onClick={() => deleteProduct(productId)}>Delete</button>
-                </div>
-            );
-        }
-    };
+    // const renderActionButtons = (productId, adminUserId) => {
+    //     if(props.isLoggedIn && adminUserId === props.currentAdminUserId) {
+    //         return (
+    //             <div className='actionBtns'>
+    //                 <Link to={`/products/edit-product/${productId}`}>Edit</Link>
+    //                 <button onClick={() => deleteProduct(productId)}>Delete</button>
+    //             </div>
+    //         );
+    //     }
+    // };
 
-    const deleteProduct = productId => {
-        props.deleteProduct(productId);
-    };
+    // const deleteProduct = productId => {
+    //     props.deleteProduct(productId);
+    // };
 
     const renderProducts = () => {
         if(!props.products) {
@@ -33,10 +33,12 @@ const ProductPage = props => {
 
         return props.products.map(product => {
             return (
-                <li key={product._id}>
-                    {product.title}
-                    {renderActionButtons(product._id)}
-                </li>
+                <Link key={product._id} to={`/products/product-detail/${product._id}`}>
+                    <li>
+                        {product.title}
+                        {/* {renderActionButtons(product._id, product.creator)} */}
+                    </li>
+                </Link>
             );
         })
     };
@@ -52,7 +54,8 @@ const ProductPage = props => {
 const mapStateToProps = state => {
     return { 
         products: state.products.products,
-        isLoggedIn: state.auth.adminUserId !== null
+        isLoggedIn: state.auth.isLoggedIn,
+        currentAdminUserId: state.auth.adminUserId
     };
 };
 

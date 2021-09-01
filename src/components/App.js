@@ -9,13 +9,16 @@ import MainPage from '../containers/MainPage/MainPage';
 import ProductPage from '../containers/ProductPage/ProductPage';
 import CreateProductPage from '../containers/CreateProductPage/CreateProductPage';
 import EditProductPage from '../containers/EditProductPage/EditProductPage';
-import SignUpPage from '../containers/AuthPages/AdminAuthPages/SignUpPage';
-import LoginPage from '../containers/AuthPages/AdminAuthPages/LoginPage';
+import ProductDetailPage from '../containers/ProductDetailPage.js/ProductDetailPage';
+import UserSignUpPage from '../containers/AuthPages/UserAuthPages/UserSignUpPage';
+import UserLoginPage from '../containers/AuthPages/UserAuthPages/UserLoginPage';
+import CartPage from '../containers/CartPage/CartPage';
+import * as actionTypes from '../redux/actions/types';
 
 const App = props => {
     const { authAutoLogin } = props;
     useEffect(() => {
-        authAutoLogin();
+        authAutoLogin(actionTypes.LOGIN_USER);
     }, [authAutoLogin]);
 
     return (
@@ -25,10 +28,12 @@ const App = props => {
                 <Switch>
                     <Route path='/' exact component={MainPage} />
                     <Route path='/products' exact component={ProductPage} />
-                    <Route path='/products/create-product' component={CreateProductPage} />
-                    <Route path='/products/edit-product/:productId' component={EditProductPage} />
-                    <Route path='/auth/admin-signup' component={SignUpPage} />
-                    <Route path='/auth/admin-login' component={LoginPage} />
+                    <Route path='/products/product-detail/:productId' component={ProductDetailPage} />
+                    {props.isAdminLoggenIn && <Route path='/products/create-product' exact component={CreateProductPage} />}
+                    {props.isAdminLoggenIn && <Route path='/products/edit-product/:productId' component={EditProductPage} />}
+                    {props.isUserLoggedIn && <Route path='/cart' component={CartPage} />}
+                    <Route path='/auth/user-signup' exact component={UserSignUpPage} />
+                    <Route path='/auth/user-login' exact component={UserLoginPage} />
                 </Switch>
             </Router>
         </div>
@@ -36,7 +41,10 @@ const App = props => {
 };
 
 const mapStateToProps = state => {
-    return { isLoggenIn: state.auth.isLoggenIn };
+    return { 
+        isAdminLoggenIn: state.auth.isLoggenIn,
+        isUserLoggedIn: state.auth.isUserLoggedIn
+    };
 };
 
 export default connect(mapStateToProps, { authAutoLogin })(App);

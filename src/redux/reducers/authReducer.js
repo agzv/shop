@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { CREATE_ADMIN_USER, LOGIN_USER_ADMIN, LOGOUT_USER_ADMIN, CREATE_ADMIN_USER_FAILED, LOGIN_USER_ADMIN_FAILED } from '../actions/types';
+import { CREATE_ADMIN_USER, LOGIN_USER_ADMIN, LOGOUT_USER_ADMIN, CREATE_ADMIN_USER_FAILED, LOGIN_USER_ADMIN_FAILED, CREATE_USER, LOGIN_USER, LOGOUT_USER } from '../actions/types';
 
 const INITIAL_STATE = {
     adminUserId: null,
@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     userToken: null,
     message: null,
     error: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    isUserLoggedIn: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -23,6 +24,12 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, error: action.payload };
         case LOGOUT_USER_ADMIN:
             return { ...state, adminUserId: null, adminToken: null, isLoggedIn: false };
+        case CREATE_USER:
+            return { ...state, message: action.payload.message };
+        case LOGIN_USER:
+            return { ...state, userId: action.payload.userId, userToken: action.payload.token, isUserLoggedIn: true };
+        case LOGOUT_USER:
+            return { ...state, userId: null, userToken: null, isUserLoggedIn: false }; 
         default:
             return state;
     }

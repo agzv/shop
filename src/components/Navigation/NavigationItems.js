@@ -1,19 +1,19 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { logoutAdminUser } from '../../redux/actions';
+import { logoutUser } from '../../redux/actions';
 import NavigationItem from './NavigationItem/NavigationItem';
 
 const NavigationItems = props => {
 
     const renderHeaderLinks = () => {
-        if(!props.isLoggedIn) {
+        if(!props.isUserLoggedIn) {
             return (
                 <Fragment>
                     <NavigationItem path='/' name='Main Page' />
                     <NavigationItem path='/products' name='Products' />
-                    <NavigationItem path='/auth/admin-signup' name='Sign Up' />
-                    <NavigationItem path='/auth/admin-login' name='Log In' />
+                    <NavigationItem path='/auth/user-signup' name='Sign Up' />
+                    <NavigationItem path='/auth/user-login' name='Log In' />
                 </Fragment>
             );
         } else {
@@ -21,8 +21,9 @@ const NavigationItems = props => {
                 <Fragment>
                     <NavigationItem path='/' name='Main Page' />
                     <NavigationItem path='/products' name='Products' />
-                    <NavigationItem path='/products/create-product' name='Create Product' />
-                    <button onClick={props.logoutAdminUser}>Log Out</button>
+                    {props.isAdminLoggedIn && <NavigationItem path='/products/create-product' name='Create Product' />}
+                    {props.isUserLoggedIn && <NavigationItem  path='/cart' name='Cart' />}
+                    <button onClick={props.logoutUser}>Log Out</button>
                 </Fragment>
             );
         }
@@ -36,7 +37,10 @@ const NavigationItems = props => {
 };
 
 const mapStateToProps = state => {
-    return { isLoggedIn: state.auth.adminUserId !== null };
+    return { 
+        isUserLoggedIn: state.auth.isUserLoggedIn,
+        isAdminLoggedIn: state.auth.isLoggedIn
+    };
 };
 
-export default connect(mapStateToProps, { logoutAdminUser })(NavigationItems);
+export default connect(mapStateToProps, { logoutUser })(NavigationItems);
