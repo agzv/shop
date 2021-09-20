@@ -3,28 +3,27 @@ import { connect } from 'react-redux';
 
 import { getCart } from '../../redux/actions';
 import CartList from '../../components/CartList/CartList';
+import './CartPage.scss';
 
 const CartPage = props => {
     const { getCart, cartProducts } = props;
 
     useEffect(() => {
-        if(!cartProducts.length) {
-            getCart();
-        }
-    }, [getCart, cartProducts]);
+        getCart()
+    }, [getCart]);
 
     const renderCartProducts = () => {
-        if(!cartProducts) {
-            return <h1>Your cart is empty</h1>
+        if(!cartProducts.length) {
+            return <h1 className='heading-primary'>Your cart is empty</h1>
         } else {
             return <CartList cartProducts={cartProducts} />
         }
     };
 
     return (
-        <div>
+        <section className='cart'>
             {renderCartProducts()}
-        </div>
+        </section>
     );
 };
 

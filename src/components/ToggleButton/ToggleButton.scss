@@ -1,0 +1,52 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.nav__button {
+    display: none;
+    background-color: $color-white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    z-index: 2000;
+    text-align: center;
+    cursor: pointer;
+    margin: .5rem 2rem;
+
+    &:hover .nav__icon::before {
+        top: -.5rem;
+    }
+
+    &:hover .nav__icon::after {
+        top: .5rem;
+    }
+
+    @include respond(phone) {
+        display: block;
+    }
+}
+
+.nav__icon {
+    display: none;
+    position: relative;
+    margin-top: 1rem;
+
+    &,
+    &::before,
+    &::after {
+        width: 2rem;
+        height: 2px;
+        background-color: $color-primary-dark;
+        display: inline-block;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        transition: all .2s;
+    }
+
+    &::before { top: -.8rem; }
+    &::after { top: .8rem; }
+}

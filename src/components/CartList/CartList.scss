@@ -1,0 +1,73 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.cart-list {
+    width: 40%;
+
+    @include respond(tab-land) {
+        width: 60%;
+    }
+    
+    @media only screen and (max-width: 50rem) {
+        width: 90%;
+    }
+
+    &__item {
+        list-style: none;
+        padding: 1.2rem 1rem;
+        margin: 1rem 0;
+        background-color: $color-primary-light;
+        border-radius: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.5rem;
+
+        @include respond(phone) {
+            flex-direction: column;
+        }
+
+        @media only screen and (max-width: 18.75em) {
+            font-size: 1.3rem;
+        }
+
+        & .btn-delete {
+            font-size: 1rem;
+            padding: .5rem 1.5rem;
+            border: none;
+        }
+    }
+
+    &__title {
+        width: 80%;
+        color: $color-white;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+
+        @include respond(phone) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__qty {
+        color: $color-secondary-dark;
+    }
+
+    &__buttons {
+        width: 40%;
+        display: flex;
+        justify-content: space-evenly;
+
+        @media only screen and (max-width: 50em) {
+            width: 70%;
+        }
+
+        @include respond(phone) {
+            flex-direction: column;
+
+            & > .btn:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}

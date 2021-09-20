@@ -1,0 +1,103 @@
+@import '../../scss/variables';
+
+.box {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+
+    &__b {
+        border-radius: 50%;
+        border-left: 4px solid;
+        border-right: 4px solid;
+        border-top: 4px solid transparent !important;
+        border-bottom: 4px solid transparent !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: ro 2s infinite;
+    }
+
+    &__b1 {
+        width: 120px;
+        height: 120px;
+        border-color: $color-primary-dark;
+    }
+
+    &__b2 {
+        width: 100px;
+        height: 100px;
+        border-color: $color-primary-light;
+        animation-delay: 0.2s;
+    }
+
+    &__b3 {
+        width: 80px;
+        height: 80px;
+        border-color: #2ecc71;
+        animation-delay: 0.4s;
+    }
+
+    &__b4 {
+        width: 60px;
+        height: 60px;
+        border-color: $color-primary;
+        animation-delay: 0.6s;
+    }
+}
+
+@keyframes ro {
+    0% {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-180deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+}
+
+// .box .b {
+//     border-radius: 50%;
+//     border-left: 4px solid;
+//     border-right: 4px solid;
+//     border-top: 4px solid transparent !important;
+//     border-bottom: 4px solid transparent !important;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     animation: ro 2s 3;
+// }
+
+// .box .b1 {
+//     width: 120px;
+//     height: 120px;
+//     border-color: #4a69bd;
+// }
+
+// .box .b2 {
+//     width: 100px;
+//     height: 100px;
+//     border-color: #f6b93b;
+//     animation-delay: 0.2s;
+// }
+
+// .box .b3 {
+//     width: 80px;
+//     height: 80px;
+//     border-color: #2ecc71;
+//     animation-delay: 0.4s;
+// }
+
+// .box .b4 {
+//     width: 60px;
+//     height: 60px;
+//     border-color: #34495e;
+//     animation-delay: 0.6s;
+// }

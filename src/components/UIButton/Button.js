@@ -5,7 +5,7 @@ const Button = props => {
         props.onButtonClick()
     };
 
-    return <button onClick={handleClick}>{props.title}</button>
+    return <button className={`btn ${props.modifier}`} onClick={handleClick}>{props.title}</button>
 };
 
 export default Button;

@@ -1,0 +1,6 @@
+@import '../../../scss/abstracts/mixins';
+
+.user-signup-page {
+    @include flexCenter;
+    flex-direction: column;
+}

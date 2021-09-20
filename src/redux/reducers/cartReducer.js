@@ -11,7 +11,12 @@ export default (state = INITIAL_STATE, action) => {
         case actionTypes.ADD_TO_CART:
             return { ...state, message: action.payload };
         case actionTypes.GET_CART:
-            return { ...state, cartProducts: state.cartProducts.concat(action.payload) }
+            return { ...state, cartProducts: action.payload };
+        case actionTypes.REMOVE_FROM_CART:
+            const updatedCartProducts = state.cartProducts.filter(cp => cp.productId._id !== action.payload.prodId);
+            return { ...state, message: action.payload.message, cartProducts: updatedCartProducts };
+        case actionTypes.CLEAR_CART:
+            return { ...state, message: action.payload, cartProducts: [] };
         default:
             return state;
     }

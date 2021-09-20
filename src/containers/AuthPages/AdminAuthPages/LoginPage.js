@@ -1,25 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { loginAdminUser } from '../../../redux/actions';
 import LoginForm from '../../../components/authForms/logInForm/LoginForm';
+import { Fragment } from 'react';
 
 const LoginPage = props => {
-    const { error } = props;
-
-    useEffect(() => {
-        console.log(error)
-    }, [error]);
 
     const onSubmit = formValues => {
         props.loginAdminUser(formValues);
     };
 
-    return <LoginForm onSubmit={onSubmit} isLoggedIn={props.isLoggedIn}  />;
+    return (
+        <Fragment>
+            <h2 className='heading-secondary'>Log In</h2>
+            <LoginForm onSubmit={onSubmit} isLoggedIn={props.isLoggedIn} isAuthenticating={props.isAuthenticating} errors={props.errors} />
+        </Fragment>
+    )
 };
 
 const mapStateToProps = state => {
-    return { error: state.auth.error };
+    return { 
+        errors: state.auth.adminLoginFormErrors,
+        isAuthenticating: state.auth.isAuthenticating
+    };
 };
 
 export default connect(mapStateToProps, { loginAdminUser })(LoginPage);

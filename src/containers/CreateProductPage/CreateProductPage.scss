@@ -1,0 +1,11 @@
+@import '../../scss/abstracts/mixins';
+@import '../../scss/variables';
+
+.create-product {
+    @include flexCenter;
+    flex-direction: column;
+
+    &__title {
+        @include section-title;
+    }
+}

@@ -1,0 +1,90 @@
+@import './variables';
+
+.btn {
+    text-decoration: none;
+    color: $color-primary-dark;
+    background-color: $color-white;
+    border: 1.5px solid $color-primary-dark;
+    border-radius: 10rem;
+    padding: .5rem 3rem;
+    text-transform: uppercase;
+    display: inline-block;
+    font-weight: 400;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        transform: translateY(3%);
+        background-color: $color-primary-dark;
+        color: $color-white;
+    }
+}
+
+.action-btn {
+    font-weight: 600;
+    transition: 0.3s;
+    cursor: pointer;
+    position: relative;
+    display: block;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 1.2em;
+        height: 1.2em;
+        position: absolute;
+        left: calc(50% - 0.75em);
+        top: calc(50% - 0.75em);
+        border: 0.15em solid transparent;
+        border-right-color: $color-primary-dark;
+        border-radius: 50%;
+        animation: button-anim 0.7s linear infinite;
+        opacity: 0;
+    }
+
+    &.loading {
+        color: transparent;
+    }
+
+    &.loading::after {
+        opacity: 1; 
+    }
+}
+  
+@keyframes button-anim {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.btn-edit {
+    border-color: $color-secondary-light;
+    color: $color-secondary-light;
+
+    &:hover {
+        background-color: $color-secondary-light;
+    }
+}
+
+.btn-delete {
+    border-color: $color-danger;
+    color: $color-danger;
+
+    &:hover {
+        background-color: $color-danger;
+    }
+}
+
+.heading-primary {
+    font-size: 2.5rem;
+    color: $color-primary-dark;
+    text-transform: uppercase;
+}
+
+.heading-secondary {
+    color: $color-primary-dark;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+}

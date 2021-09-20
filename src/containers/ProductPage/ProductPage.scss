@@ -1,0 +1,92 @@
+@import '../../scss//variables';
+@import '../../scss/abstracts/mixins';
+
+.products {
+    color: $color-primary-dark;
+    text-align: center;
+    max-width: 140rem;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    h2 {
+        margin: $section-margin;
+        text-transform: uppercase;
+        letter-spacing: .6rem;
+    }
+
+    .product-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 40rem));
+        justify-content: center;
+        gap: 2rem;
+        padding: 0 2rem;
+    }
+
+    .product-item {
+        @include flexCenter;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, .2);
+        overflow: hidden;
+        border-radius: .5rem;
+        padding: 1rem;
+
+        &__img {
+            width: 30%;
+            object-fit: cover;
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            width: 80%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        &__title {
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            // width: 100%;
+        }
+
+        &__detail {
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 1rem 0;
+            padding: .5rem;
+            color: $color-primary-dark;
+            letter-spacing: .2rem;
+            position: relative;
+            z-index: 10000;
+            transition: $main-transition;
+            transition-delay: .2s;
+
+            &::before {
+                content: '';
+                width: 1%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: -3%;
+                background-color: $color-primary-dark;
+                transition: $main-transition;
+                z-index: -10;
+            }
+
+            &:hover {
+                color: $color-white;
+            }
+
+            &:hover::before {
+                width: 100%;
+            }
+        }
+    }
+}

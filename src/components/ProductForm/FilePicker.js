@@ -14,9 +14,10 @@ class FileInput extends React.Component {
   render() {
     const { label, type } = this.props;
     return (
-        <div>
-            <label>{label}</label>
-            <input type={type} onChange={this.onChange} />
+        <div className='form__group'>
+            <label className='form__label'>{label}</label>
+            <input type={type} onChange={this.onChange} className='form__input' />
+            {this.props.error && <p className='form__error'>{this.props.error}</p>}
         </div>
     );
   };

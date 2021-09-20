@@ -1,0 +1,32 @@
+@import '../../scss/variables';
+
+.footer {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.1rem;
+
+    &::before {
+        content: '';
+        width: 80%;
+        height: .1rem;
+        position: absolute;
+        top: -15%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $color-grey-light-2;
+    }
+
+    &__link:link,
+    &__link:visited {
+        text-decoration: none;
+        color: $color-primary-dark;
+        text-transform: uppercase;
+    }
+
+    &-auth__btn {
+        padding: .2rem 1.5rem;
+        font-size: 1.2rem;
+    }
+}

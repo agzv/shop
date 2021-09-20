@@ -1,0 +1,42 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.orders-list {
+    width: 40%;
+
+    @include respond(tab-port) {
+        width: 70%;
+    }
+
+    @include respond(phone) {
+        width: 90%;
+    }
+
+    &__item {
+        list-style: none;
+        background-color: $color-primary-light;
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-size: 1.3rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        @include respond(phone) {
+            font-size: 1.1rem;
+        }
+    }
+
+    &__title {
+        color: $color-white;
+        font-size: inherit;
+        text-transform: uppercase;
+    }
+
+    &__id {
+        display: inline-block;
+        font-size: inherit;
+        color: $color-grey-light-1;
+    }
+}

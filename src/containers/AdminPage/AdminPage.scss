@@ -1,0 +1,24 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.admin-page {
+    @include flexCenter;
+    flex-direction: column;
+
+    &__nav {
+        width: 40%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__link {
+        text-decoration: none;
+        font-size: 1.2rem;
+        color: $color-primary-dark;
+        letter-spacing: 2px;
+    }
+
+    &__help {
+        margin-top: 1rem;
+    }
+}

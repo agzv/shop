@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;1,700&display=swap');
+@import '../scss/abstracts/mixins';
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+
+    @include respond(tab-land) {
+        font-size: 56.25%;
+    }
+
+    @include respond(big-desktop) {
+        font-size: 75%;
+    }
+}
+
+body {
+    box-sizing: border-box;
+    
+}

@@ -1,0 +1,88 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem 0;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+
+    @include respond(phone) {
+        flex-direction: column;
+        align-items: flex-end;
+        overflow: hidden;
+        transition: $main-transition;
+        z-index: 100;
+        padding: 0;
+        background-color: $color-white;
+    }
+
+    &__list {
+        width: 100%;
+        max-width: 130rem;
+        display: flex;
+        justify-content: space-evenly;
+
+        @include respond(phone) {
+            flex-direction: column;
+            transition: $main-transition;
+            z-index: 100;
+            height: 0;
+            overflow: hidden;
+        }
+    }
+    
+    &__item {
+        list-style: none;
+        text-align: center;
+        margin: .5rem 0;
+    }
+
+    &__link:link,
+    &__link:visited,
+    .btn-logout {
+        text-decoration: none;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .3rem;
+        color: $color-primary-dark;
+        transition: all .2s ease-in-out;
+        display: inline-block;
+
+        &:hover {
+            transform: translateY(-.3rem);
+        }
+    }
+
+    .btn-logout {
+        border: none;
+        background-color: transparent;
+        color: $color-danger;
+        cursor: pointer;
+    }
+
+    .btn-toggle {
+        display: none;
+
+        @include respond(phone) {
+            display: block;
+            align-self: flex-end;
+            z-index: 1000;
+            margin: .5rem 2rem;
+        }
+    }
+
+}
+
+.show-list {
+    @include respond(phone) {
+        height: auto;
+    }
+}
+.open-nav { 
+    @include respond(phone) {
+        height: 13rem;
+    }
+}

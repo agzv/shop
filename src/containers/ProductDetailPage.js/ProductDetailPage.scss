@@ -1,0 +1,71 @@
+@import '../../scss/variables';
+@import '../../scss/abstracts/mixins';
+
+.product {
+    @include flexCenter;
+
+    &__detail {
+        max-width: 65rem;
+        font-size: 1.4rem;
+        color: $color-primary-dark;
+        box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, .2);
+        border-radius: 1rem;
+        padding: 3rem;
+
+        @include respond(phone) {
+            margin: 0 2rem;
+        }
+    }
+
+    &__img {
+        width: 60%;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        margin: 0 auto;
+        display: block;
+    }
+
+    &__title {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        @include productSpacing;
+    }
+
+    &__description {
+        max-width: 55rem;
+        @include productSpacing;
+    }
+
+    &__price {
+        @include productSpacing;
+        font-size: 1.6rem;
+    }
+
+    &__buttons {
+        padding: 2rem;
+        display: flex;
+        justify-content: flex-end;
+
+        @include respond(phone) {
+            flex-direction: column;
+            text-align: center;
+
+            & > .btn:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+    &__away-link:link,
+    &__away-link:visited {
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+        color: $color-primary-dark;
+        transition: $main-transition;
+
+        &:hover {
+            transform: translateX(2%);
+        }
+    }
+}

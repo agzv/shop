@@ -1,0 +1,6 @@
+@import '../../scss/abstracts/mixins';
+
+.cart {
+    @include flexCenter;
+    flex-direction: column;
+}
